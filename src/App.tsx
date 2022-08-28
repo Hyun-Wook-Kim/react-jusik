@@ -1,24 +1,26 @@
-import React from 'react';
+import React, { useState } from 'react';
 import logo from './logo.svg';
-import './App.css';
+import './style/main.scss';
+import StockBoard from './views/StockBoard';
+import Loading from './views/Loading'
+import DetailPop from './views/DetailPop';
 
 function App() {
+
+
+
+
+const [showDetail, setShowDetail] = useState<Boolean>(false);
+const [detailStock, setDetailStock] = useState<String>('')
+
+
+
+console.log(showDetail)
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <StockBoard setShowDetail={setShowDetail} setDetailStock={setDetailStock}></StockBoard>
+      {showDetail && <DetailPop setShowDetail={setShowDetail} detailStock={detailStock}></DetailPop>}
     </div>
   );
 }

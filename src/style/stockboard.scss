@@ -1,0 +1,17 @@
+ul, li{
+    text-decoration: none;
+    list-style: none;
+}
+
+.stock-array{
+}
+.stock-item{
+    padding: 40px;
+    // margin-bottom: 30px;
+    border-bottom: 1px dashed black ;
+    cursor: pointer;
+}
+
+.stock-info-array{
+    margin-top: 16px;
+}
