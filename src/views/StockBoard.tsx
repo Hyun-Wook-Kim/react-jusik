@@ -23,6 +23,7 @@ type Stocks = {
     price: string,
     fltRt: string,
     mrktTotAmt: string,
+    srtnCd : string,
 
 }
 
@@ -50,7 +51,7 @@ function StockBoard( {setShowDetail, setDetailStock } : { setShowDetail : Functi
             <ul className="stock-array">
                 {stockInfo.length > 0 && stockInfo.map(stock => {
                     return (
-                        <li className="stock-item" key={stock.itmsNm} onClick={ ()=>{setShowDetail(true); setDetailStock(stock.itmsNm)}}> <h1>{stock.itmsNm}</h1>
+                        <li className="stock-item" key={stock.itmsNm} onClick={ ()=>{setShowDetail(true); setDetailStock(stock.srtnCd)}}> <h1>{stock.itmsNm}</h1>
                             <ul className="stock-info-array">
                                 <li className="stock-info">거래대금 : {stock.trPrc}</li>
                                 <li className="stock-info">거래량 : {stock.trqu}</li>
