@@ -4,8 +4,12 @@ ul, li{
 }
 
 .stock-array{
+
+    display: flex;
+    flex-wrap: wrap;
 }
 .stock-item{
+    width: 25%;
     padding: 40px;
     // margin-bottom: 30px;
     border-bottom: 1px dashed black ;
@@ -15,3 +19,5 @@ ul, li{
 .stock-info-array{
     margin-top: 16px;
 }
+
+

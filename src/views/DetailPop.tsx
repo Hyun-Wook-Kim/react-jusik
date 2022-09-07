@@ -1,17 +1,13 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { Stocks  } from "./StockBoard";
 
 const DetailPop = ({setShowDetail, detailStock} : {setShowDetail : Function, detailStock : String}) => {
 
-    // type Stocks = {
-    //     itmsNm: string,
-    //     trPrc: string,
-    //     trqu: string,
-    //     price: string,
-    //     fltRt: string,
-    //     mrktTotAmt: string,
-    //     srtnCd : string,
-    // }
+
+    const maxPriceP = useRef<HTMLParagraphElement>(null);
+    const minPriceP = useRef<HTMLParagraphElement>(null);
+
+
 
     const serviceKey = 'BwCTkUa396a0utQN0pACjyNZZg0sBM9crfzmXn3VXbqyb99aR5ESFVdKPJir2bGxQ9BG5dIa9WZCUqZ3Ts6NUg%3D%3D';
     // const [detailStockChart, setDetailStockChart] : [Array<Stocks>, Function] = useState([]);
@@ -102,18 +98,22 @@ const DetailPop = ({setShowDetail, detailStock} : {setShowDetail : Function, det
             }
 
 
-
             window.addEventListener('resize',()=>{
                     drawGraph();
             })
-
-    
             
-    
+
+            if(maxPriceP.current !== null){
+                maxPriceP.current.textContent = '최대 가격 ' + maxPrice.toString();
+            } 
+            if(minPriceP.current !== null){
+                minPriceP.current.textContent = '최소 가격' + minPrice.toString();
+            } 
+
+
         }
 
     }
-    console.log(detailStockChart)
     
 
     drawGraph();
@@ -129,10 +129,10 @@ const DetailPop = ({setShowDetail, detailStock} : {setShowDetail : Function, det
 
                         <div className="canvas-wrap">
 
-                            <p>최대가격 : <span id="max-price"></span></p>
+                            <p ref={maxPriceP}>최대가격 : <span id="max-price"></span></p>
                             <canvas id="price-change">
                             </canvas>
-                            <p>최소가격 : <span id="min-price"></span></p>
+                            <p ref={minPriceP}>최소가격 : <span id="min-price"></span></p>
 
                         </div>
 
