@@ -19,22 +19,28 @@ async function Stock( resultType : string, numOfRows : string = '1000', beginBas
 
 
 
-    const querySet : {[key : string] : any} = {
+    const querySet : {[key : string] : string} = {
         resultType,
         numOfRows,
         beginBasDt ,
     }
 
+
+    // ** 이렇게도 가능. 대신 query에 대한 type을 어떻게 지정해 주는 지...
+    // const querySet : {resultType : string; numOfRows : string;  beginBasDt : string} = {
+    //     resultType,
+    //     numOfRows,
+    //     beginBasDt ,
+    // }
+
+
     let queryList : string[] = [''];
     Object.keys(querySet).forEach(query=> {
-        // console.log(query)
-        // console.log(querySet[query])
         const queryDatum = `${query}=${querySet[query]}`;
         queryList.push(queryDatum);
     })
 
     const queryData = queryList.join('&');
-    // console.log(queryData)
 
     // API 신청 부분
      const response = await fetch(`https://apis.data.go.kr/1160100/service/GetStockSecuritiesInfoService/getStockPriceInfo?serviceKey=${serviceKey}${queryData}`);
@@ -45,13 +51,13 @@ async function Stock( resultType : string, numOfRows : string = '1000', beginBas
     return stocks;
 }
 
-async function DetailStock(detailStock : String) {
+// async function DetailStock(detailStock : String) {
 
-    const today : String = '20220826';   // 추후 new date 로 생성해야 함.
-    const fromDay : String = `${Number(today) - 1}`;
-    console.log(fromDay)
-    const response = await fetch(`https://apis.data.go.kr/1160100/service/GetStockSecuritiesInfoService/getStockPriceInfo?serviceKey=${serviceKey}`);
-}
+//     const today : String = '20220826';   // 추후 new date 로 생성해야 함.
+//     const fromDay : String = `${Number(today) - 1}`;
+//     console.log(fromDay)
+//     const response = await fetch(`https://apis.data.go.kr/1160100/service/GetStockSecuritiesInfoService/getStockPriceInfo?serviceKey=${serviceKey}`);
+// }
 
-export {Stock, DetailStock};
+export {Stock};
 

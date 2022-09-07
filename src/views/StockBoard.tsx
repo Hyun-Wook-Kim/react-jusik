@@ -5,7 +5,7 @@
  */
 
 import { useEffect, useState } from "react";
-import {Stock, DetailStock}  from "../vendor/Stock";
+import {Stock}  from "../vendor/Stock";
 import Loading from './Loading'
 
 
@@ -16,7 +16,7 @@ import Loading from './Loading'
  * fltRt : 등락률
  * MrktToAmt : 시가총액
  */
-type Stocks = {
+export type Stocks = {
     itmsNm: string,
     trPrc: string,
     trqu: string,

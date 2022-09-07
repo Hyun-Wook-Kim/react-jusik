@@ -18,6 +18,9 @@
             text-align: center;
             color: white;
             padding: 50px;
+
+            width: 60vw;
+            height: 60vh;
             .close-btn{
                 position: absolute;
                 top: 0%;
@@ -26,4 +29,19 @@
             }
         }
     }
+}
+
+
+.canvas-wrap{
+    margin-top: 48px;
+    width: 100%;
+    height: 100%;
+    // background-color: black;
+    // padding: 5%;
+}
+
+.ceil, .floor{
+    width: 100%;
+    height: 30px;
+    background-color: white;
 }

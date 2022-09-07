@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import logo from './logo.svg';
 import './style/main.scss';
 import StockBoard from './views/StockBoard';
 import Loading from './views/Loading'
