@@ -1,26 +1,26 @@
-import React, { useState } from 'react';
+import React, { Dispatch, useState } from 'react';
 import './style/main.scss';
 import StockBoard from './views/StockBoard';
-import Loading from './views/Loading'
-import DetailPop from './views/DetailPop';
+import Home from './views/Home';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import NavBar from './views/NavBar';
 
 function App() {
 
-
-
-
-const [showDetail, setShowDetail] = useState<Boolean>(false);
-const [detailStock, setDetailStock] = useState<String>('')
-
-
-
-console.log(showDetail)
+ const [loaded, setLoaded] = useState(false)
 
   return (
-    <div className="App">
-      <StockBoard setShowDetail={setShowDetail} setDetailStock={setDetailStock}></StockBoard>
-      {showDetail && <DetailPop setShowDetail={setShowDetail} detailStock={detailStock}></DetailPop>}
+    <BrowserRouter>
+        <div className="App">
+        <NavBar></NavBar>
+          <Routes>
+            <Route path='/' element={<Home></Home>}></Route>
+            <Route path='/stock-list' element={<StockBoard setLoaded={setLoaded} loaded={loaded}></StockBoard>}></Route>
+          </Routes>
+
     </div>
+    </BrowserRouter>
+
   );
 }
 

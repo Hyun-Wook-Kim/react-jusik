@@ -4,7 +4,7 @@ ul, li{
 }
 
 .stock-array{
-
+    margin-top: 60px;
     display: flex;
     flex-wrap: wrap;
 }
@@ -14,10 +14,28 @@ ul, li{
     // margin-bottom: 30px;
     border-bottom: 1px dashed black ;
     cursor: pointer;
+    position: relative;
 }
 
 .stock-info-array{
     margin-top: 16px;
 }
 
+
+.positive{
+    position: absolute;
+    right: 40px;
+    top: 40px;
+    width: 32px;
+    height: 32px;
+    background: url(../images/positive.png) no-repeat 50% / cover;
+}
+.negative{
+    position: absolute;
+    right: 20px;
+    top: 20px;
+    width: 32px;
+    height: 32px;
+    background: url(../images/warning.png) no-repeat 50% / cover;
+}
 

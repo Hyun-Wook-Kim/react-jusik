@@ -4,9 +4,12 @@
  * 
  */
 
-import { useEffect, useState } from "react";
-import {Stock}  from "../vendor/Stock";
-import Loading from './Loading'
+import { SetStateAction, useEffect, useState, Dispatch}  from "react";
+import React from 'react'
+import { Stock } from "../vendor/Stock";
+import DetailPop from "./DetailPop";
+import Loading from './Loading';
+import StockDetail from "./StockDetail";
 
 
 /**
@@ -23,43 +26,43 @@ export type Stocks = {
     price: string,
     fltRt: string,
     mrktTotAmt: string,
-    srtnCd : string,
+    srtnCd: string,
 
 }
 
 
-function StockBoard( {setShowDetail, setDetailStock } : { setShowDetail : Function, setDetailStock : Function} ) {
-    const [stockInfo, setStockInfo] = useState<Stocks[]>([]);
-    const today: string = '20220821'
-    const [isLoading, setIsLoading] = useState<Boolean>(true)
+function StockBoard({setLoaded, loaded} : {setLoaded : Function, loaded : boolean}) {
 
+    console.log('엄마 리렌더링')
+
+    const [stockInfo, setStockInfo] = useState<Stocks[]>([]);
+    const today: string = '20220907'
+    const [isLoading, setIsLoading] = useState<Boolean>(false)
+    const [showDetail, setShowDetail] = useState<Boolean>(false);
+    const [detailStock, setDetailStock] = useState<String>('')
 
     useEffect(() => {
-        setTimeout(() => {
-            Stock('json', '50', today).then(stocks => { setStockInfo(stocks.item); setIsLoading(false) });
-        }, 5000)
+        // if(loaded) return;
+            setIsLoading(true)
+            Stock('json', '20', today).then(stocks => { setStockInfo(stocks.item); 
+                setIsLoading(false)
+            });
+
+            return () => {
+                setLoaded(true)
+                console.log('destroy')
+            }
     }, [])
 
-    // console.log(setShowDetail)
 
     return (
-        
         <>
-            { isLoading && <Loading></Loading> }
-            
-            {/* {stockInfo.length > 0 ? <h2>있음</h2> : <h2>없음</h2>} */}
+            {isLoading && <Loading></Loading>}
+            {showDetail &&  <DetailPop setShowDetail={setShowDetail} detailStock={detailStock}></DetailPop>}
             <ul className="stock-array">
                 {stockInfo.length > 0 && stockInfo.map(stock => {
                     return (
-                        <li className="stock-item" key={stock.itmsNm} onClick={ ()=>{setShowDetail(true); setDetailStock(stock.srtnCd)}}> <h1>{stock.itmsNm}</h1>
-                            <ul className="stock-info-array">
-                                <li className="stock-info">거래대금 : {stock.trPrc}</li>
-                                <li className="stock-info">거래량 : {stock.trqu}</li>
-                                <li className="stock-info">주당  가격 : {Math.round(Number(stock.trPrc) / Number(stock.trqu)) }</li>
-                                <li className="stock-info">등략률 : {stock.fltRt}</li>
-                                <li className="stock-info">시가총액 : {stock.mrktTotAmt}</li>
-                            </ul>
-                        </li>
+                        <StockDetail stock={stock} setShowDetail={setShowDetail} setDetailStock={setDetailStock}></StockDetail>
                     )
                 })}
             </ul>
@@ -69,4 +72,4 @@ function StockBoard( {setShowDetail, setDetailStock } : { setShowDetail : Functi
 }
 
 
-export default StockBoard;
+export default React.memo(StockBoard) ;
