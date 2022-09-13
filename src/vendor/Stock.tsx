@@ -18,7 +18,7 @@
  const serviceKey = 'BwCTkUa396a0utQN0pACjyNZZg0sBM9crfzmXn3VXbqyb99aR5ESFVdKPJir2bGxQ9BG5dIa9WZCUqZ3Ts6NUg%3D%3D'
 
 
-async function Stock( resultType : string, numOfRows : string = '1000', beginBasDt : string = '20220801'){
+async function Stock( resultType : string, numOfRows : string = '1000', beginBasDt : string = '20220913'){
 
 
 

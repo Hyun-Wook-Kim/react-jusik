@@ -5,19 +5,23 @@
 }
 
 
+body{
+    min-width: 360px;
+}
+
 .section--lg{
-    width: 100%;
-    max-width: 1280px;
+    width: 80vw;
+    max-width: 1024px;
     margin: 0 auto;
 }
 .section--md{
-    width: 100%;
-    max-width: 936px;
+    width: 80vw;
+    max-width: 768px;
     margin: 0 auto;
 }
 .section--sm{
-    width: 100%;
-    max-width: 768px;
+    width: 80vw;
+    max-width: 600px;
     margin: 0 auto;
 }
 

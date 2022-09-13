@@ -1,7 +1,7 @@
 import { useEffect, useState, useRef } from "react";
 import { Stocks } from "./StockBoard";
 
-    
+
 const DetailPop = ({ setShowDetail, detailStock }: { setShowDetail: Function, detailStock: String }) => {
 
     const maxPriceP = useRef<HTMLParagraphElement>(null);
@@ -18,7 +18,6 @@ const DetailPop = ({ setShowDetail, detailStock }: { setShowDetail: Function, de
 
 
     useEffect(() => {
-        console.log('으갸갸갹 으갸갹 으갹')
         bringPastData(detailStock);
     }, [])
 
@@ -26,8 +25,8 @@ const DetailPop = ({ setShowDetail, detailStock }: { setShowDetail: Function, de
         const querySet: { [key: string]: any } = {
             resultType: 'json',
             numOfRows: 32,
-            beginBasDt: '20220807',
-            endBasDt: '20220911',
+            beginBasDt: '20220812',
+            endBasDt: '20220913',
             likeSrtnCd: detailStock
         }
         let queryList: string[] = [''];
@@ -62,29 +61,80 @@ const DetailPop = ({ setShowDetail, detailStock }: { setShowDetail: Function, de
             maxPrice = Math.max(...priceArr)
             minPrice = Math.min(...priceArr)
 
+            console.log(priceArr)
+
             const canvasWrap = document.querySelector('.canvas-wrap') as HTMLElement;
             canvas.width = canvasWrap?.clientWidth;
             canvas.height = canvasWrap?.clientHeight;
             const width = canvas.width;
             const height = canvas.height;
-            const floor = 30;
+            const floor = 0;
             const maxVal = maxPrice - minPrice;
             let i = 0;
+
+            let pathArr: Array<{ x: number, y: number }> = [];
 
             for (const stock of detailStockChart) {
                 const value = ((Math.round(Number(stock.trPrc) / Number(stock.trqu)) - minPrice) / (maxVal)) * height;
                 const valueWidth = width / detailStockChart.length;
-                ctx.fillStyle = "white";
+                ctx.fillStyle = "#ffffff";
                 ctx.fillRect(valueWidth * i, height - value - floor, valueWidth, value + floor);
+
+                ctx.beginPath();
+                const path =
+                {
+                    x: valueWidth * i,
+                    y: height - value - floor
+                }
+
+
+                pathArr.push(path)
                 i++;
+
             }
 
+            pathArr.forEach((pos, index) => {
+                if (index >= pathArr.length - 1) return;
+                const toIndex = index + 1
+
+                ctx.lineWidth = 4;
+                ctx.strokeStyle = 'red'
+
+
+                setTimeout(() => {
+                    drawAnimate(pathArr, index, ctx)
+                }, 150 * index)
+
+
+                ctx.arc(pathArr[toIndex].x, pathArr[toIndex].y, 2, 0, 2 * Math.PI)
+
+            })
+
+
+
+
             if (maxPriceP.current !== null) {
-                maxPriceP.current.textContent = '최대 가격 ' + maxPrice.toString();
+                maxPriceP.current.textContent = maxPrice.toString();
             }
             if (minPriceP.current !== null) {
-                minPriceP.current.textContent = '최소 가격' + minPrice.toString();
+                minPriceP.current.textContent = minPrice.toString();
             }
+        }
+    }
+
+
+    function drawAnimate(pathArr: Array<{ x: number, y: number }>, index: number, ctx: CanvasRenderingContext2D) {
+
+        const xDiffer = (pathArr[(index + 1)].x - pathArr[index].x) / 150;
+        const yDiffer = (pathArr[(index + 1)].y - pathArr[index].y) / 150;
+
+        for (let j = 0; j < 150; j++) {
+            setTimeout(() => {
+                ctx.beginPath();
+                ctx.moveTo(pathArr[index].x + (xDiffer * j), pathArr[index].y + (yDiffer * j));
+                ctx.lineTo(pathArr[index].x + (xDiffer * j + 1), pathArr[index].y + (yDiffer * j + 1));
+                ctx.stroke();
+            }, 1 * j);
         }
     }
 
@@ -104,14 +154,14 @@ const DetailPop = ({ setShowDetail, detailStock }: { setShowDetail: Function, de
                         <div className="close-btn" onClick={() => { setShowDetail(false) }}>X</div>
                         <div className="title">가격 변동</div>
 
+                        <div className="price-range">최대가격 : <span ref={maxPriceP} id="max-price"></span></div>
                         <div className="canvas-wrap">
 
-                            <p ref={maxPriceP}>최대가격 : <span id="max-price"></span></p>
                             <canvas id="price-change">
                             </canvas>
-                            <p ref={minPriceP}>최소가격 : <span id="min-price"></span></p>
 
                         </div>
+                        <div className="price-range">최소가격 : <span ref={minPriceP} id="min-price"></span></div>
 
                     </div>
                 </div>

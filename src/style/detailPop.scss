@@ -1,27 +1,37 @@
 .pop-wrapper{
     position: fixed;
     width: 100%;
+    height: 100vh;
     top: 0%;
     left: 0%;
     z-index: 999;
     .pop-inner{
         background: #00000095;
         width: 100%;
-        height: 100vh;
         display: flex;
         justify-content: center;
-        align-items: center;
+        height: 100vh;
+        
         .pop-content{
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
             position: absolute;
             left: 50%;
             top: 50%;
             transform: translate(-50%, -50%);
             text-align: center;
             color: white;
-            padding: 50px;
+            align-items: center;
+            width: 100%;
+            max-width: 60vw;
+            height: 80vh;
 
-            width: 60vw;
-            height: 60vh;
+            @media all and (max-width:768px){
+                height: 60vh;
+            }
+
+
             .close-btn{
                 position: absolute;
                 top: 0%;
@@ -34,15 +44,32 @@
 
 
 .canvas-wrap{
+    position: relative;
     margin-top: 48px;
     width: 100%;
     height: 100%;
-    // background-color: black;
-    // padding: 5%;
+    max-height: 500px;
+    background-color: black;
+    border-radius: 15px;
+
+}
+
+canvas{
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    padding: 5%;
 }
 
 .ceil, .floor{
     width: 100%;
     height: 30px;
     background-color: white;
+}
+
+
+.price-range{
+    margin-top : 16px
 }
